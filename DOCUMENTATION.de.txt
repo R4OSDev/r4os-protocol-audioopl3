@@ -1,22 +1,26 @@
 ﻿OPL3.R4P
 ========
 
-Projektstruktur seit 0.51.22
---------------------------------
+Eigenstaendiges Zig-Protokollprojekt unter Repositories/Protocols/AudioOpl3.
+Build- und Versionswahrheit ist module.R4MF.
 
-Dieses Verzeichnis ist ein eigenstaendiges R4OS-SDK-Projekt fuer OPL3.R4P.
+Anschluss: SDK_PROFILE=r4os-zig-r4p-generation2; R4DEV:Query2:2 und
+ProtocolInit2:2. r4os.technical2.protocolEntriesAsm erzeugt die Entries;
+ProtocolContext2 prueft die wirkliche ProtocolApi2 in ihrem geliehenen Scope.
+register_role und set_status sind vor Registrierung erforderlich. Deren
+konkrete Fehlercodes werden weitergegeben. Die Revision der technischen
+Tabelle ist unabhaengig vom Query2-/Entry-Symbolraum.
 
-Build:
+Native AudioOpl3Op-Praefixe bleiben caller-eigen und exklusiv bis zum Dispatch-Ruecklauf. Gemeinsame NativeProtocolView prueft Metadaten und Ausrichtung. Bank-/Operator-/Kanalregister und MIDI-Ereignisse folgen den bestehenden Synthregeln. Der Codec ist kein OPL3-Geraetebesitzer und uebernimmt keine PCM-/Clock-/Transferlebenszeit.
 
-    cd Code\System\Protocols\AudioOpl3
-    ..\..\..\DevTools\Zig\zig.exe build
+Build aus diesem Projektordner:
+    Linux: ./Build.sh
+    Windows: Build.bat
+Beide Starter verwenden dieselbe PowerShell7-Logik und SDK-Auswahl.
+Workspace-Artefakt: Artifacts/Modules/AudioOpl3/OPL3.R4P
+Image-Ziel: /R4OS/PROTOCOLS/OPL3.R4P
+IMAGE_SCOPE=full
 
-Artefakt:
-
-    zig-out\OPL3.R4P
-
-Manifest:
-
-    module.R4MF
-
-Image-Zielpfad: C:\R4OS\PROTOCOLS\OPL3.R4P
+Abnahme: vorhandene SPECTRA CHECK LOADER und SYNTHD im passenden Testimage;
+bei expliziter API2-Pruefung normaler DEV2-Aufrufer. Windows-Kompilierung
+allein belegt keine Windowsausfuehrung oder physische Audiowiedergabe.
